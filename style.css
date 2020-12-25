@@ -38,12 +38,3 @@ div {
 #weather {    
     padding: 1em;
 }
-
-#weather > div {
-    display: block;
-    padding: 0.5rem;
-}
-
-#weather > div > p,#weather > div >span {
-    height: 1rem;
-}
