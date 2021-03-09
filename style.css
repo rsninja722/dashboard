@@ -1,40 +1,260 @@
 @font-face {
-    font-family: 'Orbitron';
+    font-family: "Orbitron";
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url(yMJMMIlzdpvBhQQL_SC3X9yhF25-T1nyGy6BoWgz.woff2) format('woff2');
+    src: url(yMJMMIlzdpvBhQQL_SC3X9yhF25-T1nyGy6BoWgz.woff2) format("woff2");
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-  }
+}
 
 html {
-    background-color: #1e1e1e;
-    color: #4e9edf;
+    background-color: #0a3044;
+    color: #92ceff;
     font-size: 16px;
-    /* font-family: consolas; */
-    font-family: 'Orbitron', sans-serif;
+    font-family: consolas;
+    /* font-family: 'Orbitron', sans-serif; */
+}
+
+a {
+    color: #92ceff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    color: #d9eeff;
 }
 
 div {
     display: flex;
-    border: 1px solid rgb(191, 191, 247);
+    border: 1px solid #92ceff;
+}
+
+button {
+    background-color: #405050;
+    color: #4e9edf;
+    border-radius: 2px;
+    border: 1px solid #4e9edf;
+    cursor: pointer;
+    box-shadow: 0px 5px 3px 0px rgba(0, 0, 0, 0.75);
+    margin: 3px;
+}
+
+button:hover {
+    background-color: #3d6f6f;
+}
+
+button:active {
+    transform: translateY(2px);
+    background-color: #2d3636;
+}
+
+textarea {
+    background-color: #181818;
+    border: 1px solid #101010;
+    border-top-color: #000000;
+    border-bottom-color: #333333;
+    border-radius: 2px;
+    color: #4e9edf;
+    margin: 2px;
+	width: 170px;
+	height: 180px;
+}
+
+.topLevelDiv {
+    border-top: none;
+    border-bottom: none;
+    /* border-radius: 5px; */
+    border-left: 1px solid #4e9edf;
+    border-right: 1px solid #4e9edf;
+    background-color: #00000099;
+    box-shadow: 0px 5px 3px 1px rgba(0,0,0,0.75);
+    padding: 1em;
+}
+
+.titleP {
+    width: 100%;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid #5b8188;
+    color: #5b8188;
+    height: fit-content;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #444444;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #666666;
+}
+
+
+#dashboard {
+    display: block;
+}
+
+#month {
+    display: inline-block;
+    vertical-align: top;
+    margin: 1em;
 }
 
 #time {
-    padding: 1em;
-    width: 10rem;
-    height: 5rem;
+    display: inline-block;
+    vertical-align: top;
+    margin: 1em;
 }
 
 #date {
-    padding: 1em;
+    display: inline-block;
+    margin: 1em;
+}
+
+#calendar {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+    background-color: #1e1e1e;
+    z-index: 11;
+}
+#calendarFrame {
+    width: 100%;
+    height: 100%;
 }
 
 #timeSpan,#dateSpan {
     font-size: 2rem;
 }
 
+#weather {
+    display: inline-block;
+    vertical-align: top;
+    margin: 1em;
+}
 
-#weather {    
-    padding: 1em;
+#cryptoDiv {
+    display: inline-block;
+    vertical-align: top;
+    margin: 1em;
+}
+
+#news {
+    overflow: hidden;
+    height: 3em;
+    width: 99%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2px;
+}
+
+text {
+    fill: rgb(255, 255, 255);
+    font-size: 12px;
+}
+
+/* https://stackoverflow.com/questions/40789222/css-animate-scrolling-text-using-text-indent */
+#scrollText {
+    display: inline-block;
+    white-space: nowrap;
+    margin: 2px;
+    animation: moveText 150s infinite linear;
+    height: fit-content;
+    margin-top: 1.5em;
+}
+#scrollText:hover {
+    animation-play-state: paused;
+}
+@keyframes moveText {
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+#checkList {
+    display: inline-block;
+    width: fit-content;
+}
+
+.checkInput {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checks {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    padding-left: 35px;
+    margin-bottom: 20px;
+    user-select: none;
+}
+
+.checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    box-shadow: -2px -2px 4px rgb(66 83 109), 4px 4px 4px rgb(0 5 23);
+    border-radius: 5px;
+    background-color: #555555;
+}
+
+.checks .checkInput:checked ~ .checkbox {
+    box-shadow: inset -2px -2px 4px rgb(66 83 109), inset 4px 4px 4px rgb(0, 5, 23, 0.5);
+    background-color: #358cce;
+}
+
+.xButton {
+    background-color: red;
+    width: fit-content;
+    color: white;
+    border-color: white;
+}
+
+.xButton:hover {
+    background-color: #ff6161;
+}
+
+#changeList {
+    border: 1px solid #4e9edf;
+    margin: 5px;
+    width: fit-content;
+	padding: 5px;
+    position: absolute;
+    z-index: 10;
+    background-color: #1e1e1e;
+}
+
+#dataEntry {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+    background-color: #1e1e1e;
+    z-index: 12;
+}
+
+#dataFrame {
+    width: 100%;
+    height: 100%;
 }
