@@ -2,6 +2,9 @@ function mapRange(value, valueLow, valueHigh, remappedLow, remappedHigh) {
     return remappedLow + ((remappedHigh - remappedLow) * (value - valueLow)) / (valueHigh - valueLow);
 }
 
+var hueSlider = document.getElementById("hue");
+var root = document.documentElement;
+
 function generateMonth() {
     var date = new Date();
     var month = date.getMonth();
@@ -121,7 +124,15 @@ function getWeather() {
     } else {
         weatherURL += "?format=j1";
     }
-    // fetch(weatherURL).then(response => response.json()).then(function (data) {
+
+    fetch(weatherURL).then(response => response.json()).then(function (data) {
+    weather.innerHTML = "";
+
+    var titleP = document.createElement("p");
+    titleP.className = "titleP";
+    titleP.innerText = "WEATHER";
+    weather.appendChild(titleP);
+    
     var cur = data.current_condition[0];
 
     var leftDiv = document.createElement("div");
@@ -169,6 +180,12 @@ function getWeather() {
     span.innerText = `👁 ${cur.visibility}  ☁ ${cur.cloudcover}%`;
     span.style="display:block;border:none";
     rightDiv.appendChild(span);
+    
+    var refreshButton = document.createElement("button");
+    refreshButton.onclick = getWeather;
+    refreshButton.innerText = "↺";
+    rightDiv.appendChild(refreshButton);
+
 
     weather.appendChild(leftDiv);
     weather.appendChild(rightDiv);
@@ -252,7 +269,7 @@ function getWeather() {
     };
     weather.appendChild(button);
 
-    // });
+    });
 }
 getWeather();
 
@@ -261,9 +278,15 @@ getWeather();
 // https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=cad&days=7&interval=hourly
 // https://api.coingecko.com/api/v3/coins/dogecoin/market_chart?vs_currency=cad&days=7&interval=hourly
 function getCrypto() {
-    makeCryptoChart(data2,"BTC");
-    makeCryptoChart(data3,"ETH");
-    makeCryptoChart(data4,"DOGE");
+    fetch("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=cad&days=7&interval=hourly").then(response => response.json()).then(function (data) {
+        makeCryptoChart(data,"BTC");
+    });
+    fetch("https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=cad&days=7&interval=hourly").then(response => response.json()).then(function (data) {
+        makeCryptoChart(data,"ETH");
+    });
+    fetch("https://api.coingecko.com/api/v3/coins/dogecoin/market_chart?vs_currency=cad&days=7&interval=hourly").then(response => response.json()).then(function (data) {
+        makeCryptoChart(data,"DOGE");
+    });
 }
 function makeCryptoChart(data,label) {
     var min = Infinity;
@@ -283,7 +306,7 @@ function makeCryptoChart(data,label) {
     svg.setAttribute("width", "358");
     
     // gradient
-    svg.innerHTML = `<defs><linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:rgba(0, 47, 255, 1);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(24, 24, 24, 0);stop-opacity:1" /></linearGradient></defs>`;
+    // svg.innerHTML = `<defs><linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:rgba(0, 47, 255, 1);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(24, 24, 24, 0);stop-opacity:1" /></linearGradient></defs>`;
     
     svg.style="width:358px,height:220;padding:5px";
 
@@ -293,7 +316,7 @@ function makeCryptoChart(data,label) {
         line.setAttribute("x2",358);
         line.setAttribute("y1",~~mapRange(i,0,9,0,200)+0.5);
         line.setAttribute("y2",~~mapRange(i,0,9,0,200)+0.5);
-        line.style = "stroke:#003c3c";
+        line.style = "stroke:var(--background-color);";
         svg.appendChild(line);
     }
 
@@ -304,7 +327,7 @@ function makeCryptoChart(data,label) {
     }
     points += "358,200";
     poly.setAttribute("points", points);
-    poly.style = "stroke:#00DDFF;stroke-width:1;fill-opacity: 0.3;fill:#00ffff;";
+    poly.style = "stroke:var(--base-color);stroke-width:1;fill-opacity: 0.3;fill:var(--base-color);";
     svg.appendChild(poly);
 
     var heights = [15,105,195];
@@ -372,45 +395,45 @@ function makeCryptoChart(data,label) {
 getCrypto();
 
 function createNews() {
-    var newsData;
-    // fetch("https://api.currentsapi.services/v1/latest-news?"+this[createNews.name[18-([]+{}).length]+(this+"")[parseInt(20,3)]+(this+"")[+!![]]+(this+"")[+!![]+!![]]]((Math.min()+[])[7].toUpperCase()+"XBpS2V5PUpRNmRBcVBJb1plcnV0dlF2ZXFtM3ktcnBFUDdCdWpPUVZIQmp2LWlqNnFGRi1lZw==")).then(response => response.json()).then(function (d) {  
-    //     console.log(JSON.stringify(d))
-    // newsData = d;
-    // });
-    
-    newsData = dataN.split("\n").join("");
+    // var newsData;
+    fetch("https://api.currentsapi.services/v1/latest-news?country=CA&language=en&"+this[createNews.name[18-([]+{}).length]+(this+"")[parseInt(20,3)]+(this+"")[+!![]]+(this+"")[+!![]+!![]]]((Math.min()+[])[7].toUpperCase()+"XBpS2V5PUpRNmRBcVBJb1plcnV0dlF2ZXFtM3ktcnBFUDdCdWpPUVZIQmp2LWlqNnFGRi1lZw==")).then(response => response.json()).then(function (d) {  
+        // console.log(JSON.stringify(d))
+        var newsData = d.news;
+        
+        // newsData = dataN.split("\n").join("");
 
-    // remove quotes in titles
-    var quotes = [];
-    for(var i=0;i<newsData.length;i++) {
-        if(newsData[i] === `"`) {
-            quotes.push(i);
-            if(/([\[\]\{\}:,])/.exec(newsData[i+1]) !== null && quotes.length > 1) {
-                while(quotes.length > 2) {
-                    var index = quotes.splice(1,1)[0];
-                    for(var j=1;j<quotes.length;j++) {
-                        quotes[j]--;
-                    }
-                    i--;
-                    newsData = newsData.slice(0,index) + newsData.slice(index+1,newsData.length); 
-                }
-                quotes = [];
-            }
+        // remove quotes in titles
+        // var quotes = [];
+        // for(var i=0;i<newsData.length;i++) {
+        //     if(newsData[i] === `"`) {
+        //         quotes.push(i);
+        //         if(/([\[\]\{\}:,])/.exec(newsData[i+1]) !== null && quotes.length > 1) {
+        //             while(quotes.length > 2) {
+        //                 var index = quotes.splice(1,1)[0];
+        //                 for(var j=1;j<quotes.length;j++) {
+        //                     quotes[j]--;
+        //                 }
+        //                 i--;
+        //                 newsData = newsData.slice(0,index) + newsData.slice(index+1,newsData.length); 
+        //             }
+        //             quotes = [];
+        //         }
+        //     }
+        // }
+
+        // newsData = JSON.parse(newsData).news;
+        var span = document.createElement("span");
+        for(var i=0;i<newsData.length;i++) {
+            var a = document.createElement("a");
+            a.href = newsData[i].url;
+            a.target = "_blank";
+            a.innerText = newsData[i].title + "  |  ";
+            span.appendChild(a);
         }
-    }
-
-    newsData = JSON.parse(newsData).news;
-    var span = document.createElement("span");
-    for(var i=0;i<newsData.length;i++) {
-        var a = document.createElement("a");
-        a.href = newsData[i].url;
-        a.target = "_blank";
-        a.innerText = newsData[i].title + "  |  ";
-        span.appendChild(a);
-    }
-    span.id = "scrollText";
-    span.style.animationDuration = `${span.innerText.length/15}s`;
-    news.appendChild(span);
+        span.id = "scrollText";
+        span.style.animationDuration = `${span.innerText.length/15}s`;
+        news.appendChild(span);
+    });
 }
 createNews();
 
@@ -446,10 +469,10 @@ function createChecks(words, div) {
 
         var input = document.createElement("input");
         input.onclick = function () {
-            this.parentElement.style.color = this.checked ? "#bad9f3" : "#4e9edf";
-            if (this.checked) {
-                pulse();
-            }
+            this.parentElement.style.color = this.checked ? "#4e9edf" : "#bad9f3";
+            // if (this.checked) {
+            //     pulse();
+            // }
         };
         input.type = "checkbox";
         input.className = "checkInput";
@@ -464,9 +487,9 @@ function createChecks(words, div) {
 }
 
 function reset() {
-    for (var i of document.getElementsByTagName("input")) {
+    for (var i of document.getElementById("checkList").getElementsByTagName("input")) {
         i.checked = false;
-        i.parentElement.style.color = "#4e9edf";
+        i.parentElement.style.color = "#bad9f3";
     }
 }
 
@@ -477,6 +500,7 @@ function pulse() {
         count--;
         document.body.parentElement.style.backgroundColor = `rgb(30, ${count}, ${count})`;
         if (count <= 30) {
+            document.body.parentElement.style.backgroundColor = "#0a3044";
             clearInterval(interval);
         }
     }, 16);
@@ -489,3 +513,101 @@ function toggle(elementName) {
     var c = document.getElementById(elementName);
     c.style.display = c.style.display === "none" ? "block" : "none";
 }
+
+var canvas = document.getElementById("clock");
+var ctx = canvas.getContext("2d");
+var data = ctx.getImageData(0, 0, 300, 288);
+
+var timeText = document.getElementById("time");
+
+function updateClock() {
+    // get time
+    var time = new Date();
+    var hours = time.getHours();
+    var minutes = time.getMinutes();
+    var seconds = time.getSeconds();
+
+    // go up until this point with color
+    var pixelsToColor = hours * 3600 + minutes * 60 + seconds;
+
+    var currentPixel = 0;
+    // position in image data
+    var pos = 0;
+
+    var rgb = hslToRgb(parseInt(hueSlider.value)/360);
+
+    // go through data
+    var d = data.data;
+    for (var y = 0; y < 288; y++) {
+        for (var x = 0; x < 300; x++) {
+            if (currentPixel === pixelsToColor) {
+                d[pos] = 0;
+                d[pos + 1] = 221;
+                d[pos + 2] = 255;
+                d[pos + 3] = 255;
+                // dark
+            } else if (currentPixel > pixelsToColor) {
+                d[pos] = 2;
+                d[pos + 1] = 10;
+                d[pos + 2] = 14;
+                d[pos + 3] = 255;
+                // blue
+            } else {
+                var shading = Math.max(currentPixel+255-pixelsToColor,0);
+                d[pos] = rgb[0]+shading;
+                d[pos + 1] = rgb[1]+shading;
+                d[pos + 2] = rgb[2]+shading;
+                d[pos + 3] = 255;
+            }
+            ++currentPixel;
+            pos += 4;
+        }
+    }
+
+    ctx.putImageData(data, 0, 0);
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+
+function hslToRgb(h, s=0.95, l=0.10){
+    var r, g, b;
+
+    var hue2rgb = function hue2rgb(p, q, t){
+        if(t < 0) t += 1;
+        if(t > 1) t -= 1;
+        if(t < 1/6) return p + (q - p) * 6 * t;
+        if(t < 1/2) return q;
+        if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        return p;
+    }
+
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    var p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1/3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1/3);
+
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+}
+
+
+function setHue() {
+//   root.style.setProperty("--base-color", `hsl(${hueSlider.value},100%,80%)`);
+//   root.style.setProperty("--background-color", `hsl(${hueSlider.value},75%,10%)`);
+//   root.style.setProperty("--darker-color", `hsl(${hueSlider.value},75%,20%)`);
+    root.style.setProperty("--hue", hueSlider.value);
+}
+
+hueSlider.addEventListener("input", function(){
+  setHue();
+});
+
+// setInterval(function() {
+//     hueSlider.value = parseInt(hueSlider.value) + 1;
+//     if(parseInt(hueSlider.value) === 360) {
+//         hueSlider.value = 0;
+//     }
+//     setHue();
+// },16);

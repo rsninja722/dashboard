@@ -7,14 +7,21 @@
     <title>Dashboard</title>
 </head>
 <body>
+    <div id="dataEntry" class="topLevelDiv">
+        <p class="titleP">DATA ENTRY</p>
+        <div><button onclick="copy()">copy</button><span id="output" style="display: none;"></span></div>
+        <span>presets: </span><br><button onclick="preset(`school`)">school</button><br><button onclick="preset(`robotics`)">robotics</button><br><button onclick="preset(`work`)">work</button>
+        <div id="inputs"></div>
+    </div>
+
     <div id="dashboard" style="border: none;">
+        <div id="news" class="topLevelDiv"><p class="titleP" style="margin-left: 1em;">NEWS</p></div>
         <div id="top" style="border: none;">
             <div class="center" style="border: none;">
                 <div id="date" class="topLevelDiv"><p class="titleP">DATE</p><span id="dateSpan"></span></div>
                 <div id="time" class="topLevelDiv"><p class="titleP">TIME</p><span id="timeSpan"></span></div>
             </div>
         </div>
-        <div id="news" class="topLevelDiv"><p class="titleP" style="margin-left: 1em;">NEWS</p></div>
         <div id="month" class="topLevelDiv">
             <p class="titleP">CALENDAR</p>
             <div id="calendar" style="display: none;">
@@ -24,17 +31,22 @@
         </div>
         
         <div id="weather" class="topLevelDiv"><p class="titleP">WEATHER</p></div>
-        <div id="cryptoDiv" class="topLevelDiv"><p class="titleP">CRYPTO PRICES</p></div>
         
+        <div id="clockDiv" class="topLevelDiv">
+            <p class="titleP">1 PIXEL-PER-SECOND CLOCK</p>
+            <!-- <iframe id="clockFrame" src="clock.html"></iframe> -->
+            <canvas id="clock" width="300" height="288"></canvas>
+        </div>
+
         <div id="checkList" class="topLevelDiv">
             <p class="titleP">CHECKLIST</p>
             <button onclick="reset()">reset</button>
             <button onclick="toggle('changeList')">change</button>
-            <button onclick="toggle('dataEntry')">data entry</button>
-            <div id="dataEntry" style="display: none;">
-                <button onclick="toggle('dataEntry')" class="xButton" style="position: absolute; top:0; left:0;">x</button>
-                <iframe id="dataFrame" src="data.html"></iframe>
-            </div>
+            <!-- <button onclick="toggle('dataEntry')">data entry</button>
+                <div id="dataEntry" style="display: none;">
+                    <button onclick="toggle('dataEntry')" class="xButton" style="position: absolute; top:0; left:0;">x</button>
+                    <iframe id="dataFrame" src="data.html"></iframe>
+            </div> -->
             <div id="changeList" style="display: none;">
                 <span>daily</span><br>
                 <textarea id="dailyText"></textarea><br>
@@ -43,7 +55,7 @@
                 <button onclick="toggle('changeList')" class="xButton">x</button>
                 <button onclick="updateChecklist()">update</button>
             </div>
-            <div style="display: block;">
+            <div style="display: block;border: none;">
                 <span>daily</span>
                 <div id="daily" style="display: block;"></div>
                 <span>today</span>
@@ -51,9 +63,20 @@
             </div>
             
         </div>
+        
+        
+        <div id="cryptoDiv" class="topLevelDiv"><p class="titleP">CRYPTO PRICES</p></div>
+        
+        <div id="options" class="topLevelDiv">
+            <p class="titleP">OPTIONS</p>
+            <!-- https://codepen.io/simoncoudeville/pen/MPLwMe -->
+            <input id="hue" type="range" value="195" max="360">
+        </div>
     </div>
-    <script src="test.js"></script>
+    
+    <!-- <script src="test.js"></script> -->
     <script src="main.js"></script>
+    <script src="data.js"></script>
     <defs>
         <linearGradient id="grady">
             <stop offset="0%" stop-color="#F60" />

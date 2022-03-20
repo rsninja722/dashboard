@@ -8,45 +8,47 @@
 }
 
 html {
-    background-color: #0a3044;
-    color: #92ceff;
+    /* background-color: #0a3044; */
+    /* color: #92ceff; */
+    background-color: var(--background-color);
+    color: var(--base-color);
     font-size: 16px;
     font-family: consolas;
     /* font-family: 'Orbitron', sans-serif; */
 }
 
 a {
-    color: #92ceff;
+    color: var(--base-color);;
     text-decoration: none;
     cursor: pointer;
 }
 
 a:hover {
-    color: #d9eeff;
+    color: #e0e0e0;
 }
 
 div {
     display: flex;
-    border: 1px solid #92ceff;
+    border: 1px solid var(--base-color);;
 }
 
 button {
-    background-color: #405050;
-    color: #4e9edf;
+    background-color: #4b4b4b;
+    color: var(--base-color);
     border-radius: 2px;
-    border: 1px solid #4e9edf;
+    border: 1px solid var(--base-color);
     cursor: pointer;
     box-shadow: 0px 5px 3px 0px rgba(0, 0, 0, 0.75);
     margin: 3px;
 }
 
 button:hover {
-    background-color: #3d6f6f;
+    background-color: #6d6d6d;
 }
 
 button:active {
     transform: translateY(2px);
-    background-color: #2d3636;
+    background-color: #333333;
 }
 
 textarea {
@@ -55,7 +57,7 @@ textarea {
     border-top-color: #000000;
     border-bottom-color: #333333;
     border-radius: 2px;
-    color: #4e9edf;
+    color: var(--base-color);
     margin: 2px;
 	width: 170px;
 	height: 180px;
@@ -65,8 +67,8 @@ textarea {
     border-top: none;
     border-bottom: none;
     /* border-radius: 5px; */
-    border-left: 1px solid #4e9edf;
-    border-right: 1px solid #4e9edf;
+    border-left: 1px solid var(--base-color);
+    border-right: 1px solid var(--base-color);
     background-color: #00000099;
     box-shadow: 0px 5px 3px 1px rgba(0,0,0,0.75);
     padding: 1em;
@@ -77,8 +79,8 @@ textarea {
     margin-right: auto;
     margin-top: 0;
     margin-bottom: 0;
-    border-bottom: 1px solid #5b8188;
-    color: #5b8188;
+    border-bottom: 1px solid var(--darker-color);
+    color: var(--darker-color);
     height: fit-content;
 }
 
@@ -101,6 +103,13 @@ textarea {
 
 #dashboard {
     display: block;
+    padding-left: 15em;
+}
+
+#top {
+    display: inline-block;
+    vertical-align: top;
+    margin: 1em;
 }
 
 #month {
@@ -148,6 +157,7 @@ textarea {
     display: inline-block;
     vertical-align: top;
     margin: 1em;
+    width: min-content;
 }
 
 #news {
@@ -159,6 +169,25 @@ textarea {
     margin-left: auto;
     margin-right: auto;
     padding: 2px;
+}
+
+#clockDiv {
+    display: inline-block;
+    width: fit-content;
+    vertical-align: top;
+    margin: 1em;
+}
+
+#clockFrame {
+    margin-top: 6px;
+    width: 300px;
+    height: 288px;
+    border: none;
+}
+
+#options {
+    width: fit-content;
+    display: inline-block;
 }
 
 text {
@@ -204,6 +233,9 @@ text {
     padding-left: 35px;
     margin-bottom: 20px;
     user-select: none;
+    margin-left: 3px;
+    margin-top: 3px;
+
 }
 
 .checkbox {
@@ -213,7 +245,7 @@ text {
     cursor: pointer;
     width: 25px;
     height: 25px;
-    box-shadow: -2px -2px 4px rgb(66 83 109), 4px 4px 4px rgb(0 5 23);
+    box-shadow: inset -2px -2px 4px rgb(66 83 109), inset 4px 4px 4px rgb(0, 5, 23, 0.5);
     border-radius: 5px;
     background-color: #555555;
 }
@@ -235,7 +267,7 @@ text {
 }
 
 #changeList {
-    border: 1px solid #4e9edf;
+    border: 1px solid var(--base-color);;
     margin: 5px;
     width: fit-content;
 	padding: 5px;
@@ -244,17 +276,73 @@ text {
     background-color: #1e1e1e;
 }
 
-#dataEntry {
-    position: absolute;
-    width: 90%;
-    height: 90%;
-    top: 5%;
-    left: 5%;
-    background-color: #1e1e1e;
-    z-index: 12;
+
+#hue {
+    -webkit-appearance: none;
+    border: none;
+    width: 180px;
+    height: 6px;
+    border-radius: 2px;
+    background: linear-gradient(
+    to right,
+    #ff0000 0%,
+    #ffff00 17%,
+    #00ff00 33%,
+    #00ffff 50%,
+    #0000ff 67%,
+    #ff00ff 83%,
+    #ff0000 100%
+  );
 }
 
-#dataFrame {
-    width: 100%;
-    height: 100%;
+#hue::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 3px solid white;
+	width: 15px;
+    height: 15px;
+	border-radius: 50%;
+	background: hsl(var(--hue),100%,50%);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.025), 0 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+:root {
+    --hue: 195;
+    --base-color: hsl(var(--hue),100%,80%);
+    --background-color: hsl(var(--hue),75%,10%);
+    --darker-color: hsl(var(--hue),75%,20%);
+    /* --base-color: #92ceff;
+    --background-color: #0a3044;
+    --darker-color: #5b8188; */
+}
+
+#dataEntry input {
+    background-color: #181818;
+    border: 1px solid #101010;
+    border-top-color: #000000;
+    border-bottom-color: #333333;
+    border-radius: 2px;
+    color: #4de1f5;
+    margin: 2px;
+    width: 10em;
+}
+
+#dataEntry {
+    display: block;
+    width: fit-content;
+    position: absolute;
+    left: 1em;
+    top: 1em;
+}
+
+#dataEntry div {
+    display: block;
+    border: none;
+}
+
+#dataEntry * {
+    height: fit-content;
+}
+
+#inputs {
+    text-align: left;
 }
